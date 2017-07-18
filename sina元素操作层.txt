@@ -1,0 +1,117 @@
+*** Settings ***
+Library           AppiumLibrary
+
+*** Keywords ***
+滑动刷新
+    swipe    400    498    400    1498
+    sleep    10
+
+评论-验证-删除
+    #点击“我”
+    click Element    name=我的资料
+    sleep    5
+    #点击“微博”
+    click Element    id=cabWeibo
+    sleep    5
+    #取第一条微博
+    @{liujianbo}    get webelements    id=mblogHeadtitle
+    click Element    @{liujianbo}[0]
+    #评论前验证评论数量
+    Page should contain Element    name=评论 0
+    #点击评论
+    click Element    id=comment
+    #输入评论内容
+    input text    id=sv_element_container    1234
+    #点击发送
+    click Element    id=titleSave
+    swipe    400    713    400    1153
+    sleep    5
+    #验证评论后的评论数量
+    Page should contain Element    name=评论 1
+    #设置数组为@{liujianbo}
+    @{liujianbo}    Get Webelements    id=detail_cmtitemview_root
+    #点击数组列表中排序为1的
+    click Element    @{liujianbo}[0]
+    #点击删除
+    click Element    name=删除
+    #点击确定
+    click Element    name=确定
+    sleep    5
+    #验证删除后评论数量
+    Page Should Contain Element    name=评论 0
+
+微博点赞
+    #点击“我”
+    click Element    name=我的资料
+    sleep    5
+    #点击“微博”
+    click Element    id=cabWeibo
+    sleep    5
+    #验证点赞数量
+    page should contain text    赞
+    #设置数组变量
+    @{liujianbo}    get webelements    id=ly_feed_like_icon
+    #点击数组下第2个“赞”
+    click Element    @{liujianbo}[1]
+    sleep    5
+    page should contain element    name=1
+    #设置数组变量
+    @{liujinabo}    get webelements    id=ly_feed_like_icon
+    #点击数组下第2个“ 1”
+    click Element    @{liujinabo}[1]
+    sleep    5
+    page should contain text    赞
+    sleep    5
+
+发微博
+    #点击“+”发微博
+    click Element    id=plus_icon
+    #点击“文字”
+    click Element    id=composer_item_image
+    sleep    5
+    #输入文本信息
+    input text    id=sv_element_container    我要发微博，刘剑波123abcd
+    #点击“发送”
+    click Element    id=titleSave
+    sleep    10
+    #验证当前页面文本信息
+    Page Should Contain Element    name=我要发微博，刘剑波123abcd ​​​
+    sleep    5
+
+滑动刷新微博
+    #确定刷新坐标位置
+    swipe    600    309    600    1400
+    sleep    10
+
+第三方登录
+    #点击“登录”
+    click Element    id=titleSave
+    sleep    5
+    @{liujianbo}    get Webelements    id=iv_switchuser_loginbutton_icon
+    click Element    @{liujianbo}[1]
+    sleep    5
+
+坐标点击登录
+    #获取坐标-通过坐标点击登录
+    click a Point    600    922.5    10
+    sleep    5
+
+输入用户名
+    #点击登录
+    click Element    id=titleSave
+    #清除本文框
+    clear text    id=etLoginUsername
+    #输入文本框-用户名
+    input text    id=etLoginUsername    17600901055
+
+输入密码
+    #输入文本框-密码
+    input text    id=etPwd    ljb850916
+
+xpath定位（其他登录）
+    #点击登录
+    click Element    id=titleSave
+    sleep    5
+    #使用xpath定位登录页面‘其他登录’
+    click Element    xpath=//android.widget.TextView[@text='其他登录']
+    sleep    5
