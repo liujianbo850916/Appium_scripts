@@ -1,0 +1,19 @@
+*** Settings ***
+Library           AppiumLibrary
+
+*** Keywords ***
+返回
+
+取消
+
+点击登录
+    #点击“确定”
+    click Element    name=确定
+
+关闭应用
+    close Application
+
+打开应用
+    open application    http://127.0.0.1:4723/wd/hub    platformName=Android    deviceName=T7K6R14721000862    appPackage=com.sina.weibo    appActivity=com.sina.weibo.SplashActivity    run_on_failure=Capture Page Screenshot
+    ...    unicodeKeyboard=true    resetKeyboary=true
+    sleep    30
