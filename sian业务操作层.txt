@@ -1,0 +1,40 @@
+*** Settings ***
+Library           AppiumLibrary
+
+*** Keywords ***
+sina登录
+    [Arguments]    ${username}    ${pwd}
+    open application    http://127.0.0.1:4723/wd/hub    platformName=Android    deviceName=455915f37d82    appPackage=com.sina.weibo    appActivity=com.sina.weibo.SplashActivity    run_on_failure=Capture Page Screenshot
+    ...    unicodeKeyboard=true    resetKeyboary=true
+    sleep    30
+    #点击登录
+    click Element    id=titleSave
+    #清除本文框
+    clear text    id=etLoginUsername
+    #输入文本框-用户名
+    input text    id=etLoginUsername    ${username}
+    #输入文本框-密码
+    input text    id=etPwd    ${pwd}
+    #点击登录
+    click element    name=登录
+    sleep    15
+    #验证是否登录成功
+    Page Should Contain Element    name=人在路上漂
+    sleep    5
+
+sina退出
+    #点击“我”
+    click Element    name=我的资料
+    sleep    10
+    #点击“设置”
+    click Element    id=titleSave
+    #点击“账号管理”
+    click Element    id=accountLayout
+    #点击“退出当前账号”
+    click Element    id=exitAccountContent
+    #点击“确定”
+    click Element    name=确定
+    sleep    10
+    #验证是否退出成功
+    Page Should Contain Element    name=关闭
+    sleep    5
