@@ -1,0 +1,15 @@
+*** Settings ***
+Library           AppiumLibrary
+Resource          sina公共层.txt
+Resource          sian业务操作层.txt
+Resource          sina元素操作层.txt
+
+*** Test Cases ***
+登录
+    sina登录    17600901055    ljb850916
+    关闭应用
+
+退出
+    打开应用
+    sina退出
+    关闭应用
